@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: legacymail
+  labels:
+    app: legacymail
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: legacymail
+  template:
+    metadata:
+      labels:
+        app: legacymail
+    spec:
+      containers:
+        - name: legacymail
+          image: 'jusschwa/legacymail:latest'
+          env:
+{{- if .Values.popHostName }}
+            - name: POP3_DST_HOST
+              value: '{{ .Values.popHostName }}'
+            - name: POP3_DST_PORT
+              value: '{{ .Values.popDstPort }}'
+{{- end }}
+{{- if .Values.imapDstHost }}
+            - name: IMAP_DST_HOST
+              value: '{{ .Values.imapDstHost }}'
+            - name: IMAP_DST_PORT
+              value: '{{ .Values.imapDstPort }}'
+{{- end }}
+          ports:
+{{- if .Values.popDstPort }}
+            - containerPort: {{ .Values.popInternalPort }}
+{{- end }}
+{{- if .Values.imapDstPort }}
+            - containerPort: {{ .Values.imapInternalPort }}
+{{- end }}
+        - name: legacymail-postfix
+          image: 'jusschwa/legacymail-postfix:latest'
+          env:
+{{- if .Values.smtpDstHost }}
+            - name: SMTP_DST_HOST
+              value: '{{ .Values.smtpDstHost }}'
+            - name: SMTP_DST_PORT
+              value: '{{ .Values.smtpDstPort }}'
+{{- end }}
+          ports:
+{{- if .Values.smtpDstPort }}
+            - containerPort: {{ .Values.smtpInternalPort }}
+{{- end }}

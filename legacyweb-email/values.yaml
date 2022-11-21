@@ -1,0 +1,29 @@
+# Default values for legacyweb
+
+# These are probably the only things you will want to change.
+# Point these to the mail service you want to forward to.
+popHostName: 'pop.gmx.com'
+popDstPort: 995
+
+# imapDstHost: 'imap.gmx.com'
+# imapDstPort: 993
+
+smtpDstHost: 'mail.gmx.com'
+smtpDstPort: 465
+
+
+# The rest are specific to the deployment.
+
+# External ports are what you will point your legacy email application to.
+popExternalPort: 30110
+# imapExternalPort: 30993
+smtpExternalPort: 30465
+
+
+# Internal ports are just what the application listens on in the container, you probably don't care about those.
+popInternalPort: 9110
+# imapInternalPort: 9143
+smtpInternalPort: 9025
+
+
+legacyAuth: true
