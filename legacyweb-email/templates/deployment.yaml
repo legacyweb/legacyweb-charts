@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: legacymail
+  namespace: {{ .Values.nsEmail }}
   labels:
     app: legacymail
 spec:

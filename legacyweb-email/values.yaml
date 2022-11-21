@@ -26,4 +26,4 @@ popInternalPort: 9110
 smtpInternalPort: 9025
 
 
-legacyAuth: true
+nsEmail: email
