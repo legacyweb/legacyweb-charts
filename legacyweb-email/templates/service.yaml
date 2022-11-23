@@ -20,14 +20,21 @@ spec:
 {{- if .Values.imapDstPort }}
     - name: imap
       protocol: TCP
-      port: {{ .Values.imapDstPort }}
+      port: {{ .Values.imapInternalPort }}
       targetPort: {{ .Values.imapInternalPort }}
       nodePort: {{ .Values.imapExternalPort }}
 {{- end }}
 {{- if .Values.smtpDstPort }}
     - name: smtp
       protocol: TCP
-      port: {{ .Values.smtpDstPort }}
+      port: {{ .Values.smtpInternalPort }}
       targetPort: {{ .Values.smtpInternalPort }}
       nodePort: {{ .Values.smtpExternalPort }}
+{{- end }}
+{{- if .Values.smtpLegacyDstPort }}
+    - name: smtp
+      protocol: TCP
+      port: {{ .Values.smtpLegacyInternalPort }}
+      targetPort: {{ .Values.smtpLegacyInternalPort }}
+      nodePort: {{ .Values.smtpLegacyExternalPort }}
 {{- end }}

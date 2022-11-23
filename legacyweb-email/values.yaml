@@ -8,22 +8,34 @@ popDstPort: 995
 # imapDstHost: 'imap.gmx.com'
 # imapDstPort: 993
 
-smtpDstHost: 'mail.gmx.com'
-smtpDstPort: 465
+# Only use these if your email client supports SASL authentication
+# smtpDstHost: 'mail.gmx.com'
+# smtpDstPort: 465
 
+# Enable this if you want legacy auth (uses postfix for smtp auth; you need this for really old clients)
+legacyAuth: true
+
+# SMTP for legacy auth
+smtpLegacyDstHost: 'mail.gmx.com'
+smtpLegacyDstPort: 587
+
+# If you are using legacyAuth, you have to specify your email credentials here so postfix can use them.
+emailUser: 'someguy@gmx.com'
+emailPassword: 'supersecretpassword'
 
 # The rest are specific to the deployment.
 
 # External ports are what you will point your legacy email application to.
 popExternalPort: 30110
 # imapExternalPort: 30993
-smtpExternalPort: 30465
+# smtpExternalPort: 30465
+smtpLegacyExternalPort: 30025
 
 
 # Internal ports are just what the application listens on in the container, you probably don't care about those.
 popInternalPort: 9110
 # imapInternalPort: 9143
-smtpInternalPort: 9025
-
+# smtpInternalPort: 9025
+smtpLegacyInternalPort: 25
 
 nsEmail: email

@@ -31,16 +31,6 @@ spec:
             - name: IMAP_DST_PORT
               value: '{{ .Values.imapDstPort }}'
 {{- end }}
-          ports:
-{{- if .Values.popDstPort }}
-            - containerPort: {{ .Values.popInternalPort }}
-{{- end }}
-{{- if .Values.imapDstPort }}
-            - containerPort: {{ .Values.imapInternalPort }}
-{{- end }}
-        - name: legacymail-postfix
-          image: 'jusschwa/legacymail-postfix:latest'
-          env:
 {{- if .Values.smtpDstHost }}
             - name: SMTP_DST_HOST
               value: '{{ .Values.smtpDstHost }}'
@@ -48,6 +38,26 @@ spec:
               value: '{{ .Values.smtpDstPort }}'
 {{- end }}
           ports:
-{{- if .Values.smtpDstPort }}
+{{- if .Values.popInternalPort }}
+            - containerPort: {{ .Values.popInternalPort }}
+{{- end }}
+{{- if .Values.imapInternalPort }}
+            - containerPort: {{ .Values.imapInternalPort }}
+{{- end }}
+{{- if .Values.smtpInternalPort }}
             - containerPort: {{ .Values.smtpInternalPort }}
+{{- end }}
+{{- if .Values.legacyAuth }}
+        - name: legacymail-postfix
+          image: 'jusschwa/legacymail-postfix:latest'
+          env:
+            - name: SMTP_DST_HOST
+              value: '{{ .Values.smtpLegacyDstHost }}'
+            - name: SMTP_DST_PORT
+              value: '{{ .Values.smtpLegacyDstPort }}'
+          envFrom:
+            - secretRef:
+                name: legacymail-credentials
+          ports:
+            - containerPort: {{ .Values.smtpLegacyInternalPort }}
 {{- end }}
