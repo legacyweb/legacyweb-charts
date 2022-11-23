@@ -1,0 +1,8 @@
+
+nsWeather: 'weather'
+
+internalPort: 3000
+
+externalPort: 30081
+
+apiKey: 'abc123'

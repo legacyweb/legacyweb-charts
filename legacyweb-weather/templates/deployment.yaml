@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: legacyweb-weather
+  namespace: {{ .Values.nsWeather }}
+  labels:
+    app: legacyweb-weather
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: legacyweb-weather
+  template:
+    metadata:
+      labels:
+        app: legacyweb-weather
+    spec:
+      containers:
+        - name: legacyweb-weather
+          image: 'jusschwa/legacyweb-weather:latest'
+          envFrom:
+            - secretRef:
+                name: legacyweb-weather-api-key
+          ports:
+            - containerPort: {{ .Values.internalPort }}
