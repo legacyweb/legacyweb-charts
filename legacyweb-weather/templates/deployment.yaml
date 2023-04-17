@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
         - name: legacyweb-weather
-          image: 'jusschwa/legacyweb-weather:latest'
+          image: 'jusschwa/weather:latest'
+          imagePullPolicy: Always
           envFrom:
             - secretRef:
                 name: legacyweb-weather-api-key
